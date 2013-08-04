@@ -8,6 +8,10 @@
 #   Hiera hierarchy.
 #   Default: empty
 #
+# [*backends*]
+#   Hiera backends.
+#   Default: ['yaml']
+#
 # [*hiera_yaml*]
 #   Heira config file.
 #   Default: auto-set, platform specific
@@ -23,6 +27,11 @@
 # [*group*]
 #   Group owner of the files.
 #   Default: auto-set, platform specific
+#
+# [*extra_config*]
+#   An extra string fragment of YAML to append to the config file.
+#   Useful for configuring backend-specific parameters.
+#   Default: ''
 #
 # === Actions:
 #
