@@ -41,12 +41,15 @@ resource types to declare. Individual type declarations also have a conventional
 
 To use `hiera_declare_types`, the following configuration is required:
 
-- A key name to use for types e.g. `types` (Only needed for user-defined types, default is `types`)
-- 2 lines in the puppet `sites.pp` file (e.g. */etc/puppet/manifests/sites.pp*).
+- A key name to use for types e.g. `types` (The default is `types`, so you only need to
+  pass a value if you want it to be different)
+- 2 lines in the puppet `sites.pp` file (e.g. `/etc/puppet/manifests/sites.pp`).
   Since this is currently packaged as a module, include the module `include hiera`, then
-  call `hiera_declare_types('types')`. Note that this line must be outside any node
+  call `hiera_declare_types([])`. Note that this line must be outside any node
   definition and below any top-scope variables in use for Hiera lookups. You can call
-  `hiera_declare_types` before or after `hiera_include`.
+  `hiera_declare_types` before or after `hiera_include`. Also note that an anonymous array
+  has been passed as `hiera_declare_types` is currently implemented in a module rather than
+  the puppet core.
 - Node keys in the appropriate data sources. For built in types, the convention is
   `hiera_<type>`, so for the `file` type, it would be `hiera_file`, for `exec`, `hiera_exec`
   and so on. In a data source keyed to a node's role, one might have:
@@ -74,7 +77,7 @@ To use `hiera_declare_types`, the following configuration is required:
 
   all of these file declarations will be made by `hiera_declare_types`! Lastly, you can declare
   user-defined resource types. For example, a mysql module may define a `mysql::db` type. To
-  declare these with `hiera_declare_types('types')` you might have
+  declare these with `hiera_declare_types([])` you might have
 
 ```yaml
       ---
