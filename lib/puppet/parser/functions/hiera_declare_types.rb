@@ -84,7 +84,7 @@ To use `hiera_declare_types`, the following configuration is required:
     # Load all the declarations for known types we can find
     known_types.each do |known_type|
       hiera_key = 'hiera_' + known_type
-      hash      = function_hiera_hash([hiera_key, {}])
+      hash      = call_function('lookup', [hiera_key, {'merge' => 'hash', 'default_value' => {}}])
       if hash.length > 0
         function_create_resources([known_type, hash])
       end
@@ -92,12 +92,12 @@ To use `hiera_declare_types`, the following configuration is required:
 
     # Users must enumerate the third-party resource types they're using, much like
     # enumerating classes for hiera_include('classes')
-    raw_third_party_types = function_hiera_array([third_party_key, []])
+    raw_third_party_types = call_function('lookup', [third_party_key, {'default_value' => []}])
     raw_third_party_types.each do |third_party_type|
       # Allow the double-colon notation for type enumeration, but use our 'hiera_' convention
       # for the actual type configuration
       hiera_key = 'hiera_' + third_party_type.sub('::', '_')
-      hash      = function_hiera_hash([hiera_key, {}])
+      hash      = call_function('lookup', [hiera_key, {'merge' => 'hash', 'default_value' => {}}])
 
       if hash.length > 0
         function_create_resources([third_party_type, hash])
