@@ -96,7 +96,7 @@ To use `hiera_declare_types`, the following configuration is required:
     raw_third_party_types.each do |third_party_type|
       # Allow the double-colon notation for type enumeration, but use our 'hiera_' convention
       # for the actual type configuration
-      hiera_key = 'hiera_' + third_party_type.sub('::', '_')
+      hiera_key = 'hiera_' + third_party_type.gsub('::', '_')
       hash      = function_hiera_hash([hiera_key, {}])
 
       if hash.length > 0
